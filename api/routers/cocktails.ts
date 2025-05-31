@@ -16,7 +16,13 @@ cocktailsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, n
             return;
         }
 
-        const ingredients = JSON.parse(req.body.ingredients);
+        let ingredients;
+        try {
+            ingredients = JSON.parse(req.body.ingredients);
+        } catch (e) {
+            res.status(400).send({error: 'Invalid ingredients format'});
+            return;
+        }
 
         if (!Array.isArray(ingredients)) {
             res.status(400).send({error: 'Ingredients must be an array'});
@@ -28,7 +34,7 @@ cocktailsRouter.post('/', auth, imagesUpload.single('image'), async (req, res, n
             name: req.body.name,
             recipe: req.body.recipe,
             ingredients: ingredients,
-            image: req.file ? '/images/' + req.file.filename : null,
+            image: req.file ? '/images/' + req.file.filename : null, // Обратите внимание на путь
         });
 
         await cocktail.save();

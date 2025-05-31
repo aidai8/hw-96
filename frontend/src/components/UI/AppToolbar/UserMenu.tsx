@@ -1,6 +1,6 @@
 import {User} from "../../../types";
 import {Avatar, Button, Menu, MenuItem} from "@mui/material";
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import React, {useState} from "react";
 import {useAppDispatch} from "../../../app/hooks.ts";
 import {logout} from "../../../features/users/usersThunks.ts";
@@ -52,6 +52,11 @@ const UserMenu: React.FC<Props> = ({user}) => {
                         <Button component={NavLink} to='/admin' onClick={handleClose} color={'secondary'}>Admin</Button>
                     </MenuItem>
                 }
+                <MenuItem>
+                    <Button component={Link} to="/my-cocktails" onClick={handleClose}>
+                        My Cocktails
+                    </Button>
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
         </>
